@@ -23,6 +23,11 @@ jobs:
         run: |
           gem install bundler
           bundle install
+      - name: Archive vendor/ as artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: vendor
+          path: vendor
       - name: Build Site
         run: bundle exec jekyll build
       - name: Archive site as artifact
@@ -30,3 +35,19 @@ jobs:
         with:
           name: _site
           path: _site
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve vendor/ from artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: vendor
+      - name: Retrieve site from artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: _site
+      - name: Test S3 Publish
+        run: |
+          bundle exec s3_website install
+          bundle exec s3_website push --dry-run
+
