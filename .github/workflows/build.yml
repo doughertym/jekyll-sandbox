@@ -23,6 +23,11 @@ jobs:
         run: |
           gem install bundler
           bundle install
+          bundle show jekyll
+          bundle show s3_website
+          bundle package
+          bundle show jekyll
+          bundle show s3_website
           ls -la
       - name: Build Site
         run: bundle exec jekyll build
@@ -33,6 +38,7 @@ jobs:
           path: _site
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Retrieve vendor/ from artifacts
         uses: actions/download-artifact@v1
