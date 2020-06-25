@@ -23,11 +23,9 @@ jobs:
         run: |
           gem install bundler
           bundle install
-          bundle show jekyll
-          bundle show s3_website
+          bundle info jekyll
           bundle package
           bundle show jekyll
-          bundle show s3_website
           ls -la
       - name: Build Site
         run: bundle exec jekyll build
