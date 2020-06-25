@@ -23,10 +23,12 @@ jobs:
         run: |
           gem install bundler
           bundle install
-          bundle info jekyll
           bundle package
-          bundle show jekyll
-          ls -la
+      - name: Archive site as artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: vendor
+          path: vendor
       - name: Build Site
         run: bundle exec jekyll build
       - name: Archive site as artifact
