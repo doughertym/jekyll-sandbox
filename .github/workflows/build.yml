@@ -24,9 +24,9 @@ jobs:
           gem install bundler
           bundle install
       - name: Build Site
-         run: bundle exec jekyll build
+        run: bundle exec jekyll build
       - name: Archive site as artifact
-          uses: actions/upload-artifact@v1
-          with:
-            name: _site
-            path: _site
+        uses: actions/upload-artifact@v1
+        with:
+          name: _site
+          path: _site
