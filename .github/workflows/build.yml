@@ -21,7 +21,8 @@ jobs:
           ruby-version: 2.5
       - name: Install dependencies
         run: |
-          gem install bundler
+          gem install -​-vendor bundler
+          gem install -​-vendor s3_website
           bundle install
           bundle package
       - name: Archive site as artifact
@@ -50,8 +51,6 @@ jobs:
           name: _site
       - name: Test S3 Publish
         run: |
-          gem install bundler
-          gem install s3_website
           bundle exec s3_website install
           bundle exec s3_website push --dry-run
 
