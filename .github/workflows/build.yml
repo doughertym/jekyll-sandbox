@@ -50,6 +50,8 @@ jobs:
           name: _site
       - name: Test S3 Publish
         run: |
+          gem install bundler
+          gem install s3_website
           bundle exec s3_website install
           bundle exec s3_website push --dry-run
 
