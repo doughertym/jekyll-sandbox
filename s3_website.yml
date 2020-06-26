@@ -1,7 +1,7 @@
 # corgibytes_com_jekyll
 s3_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
 s3_secret: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
-s3_bucket: jekyll-sandbox.threedev.io
+s3_bucket: <%= ENV['S3_BUCKET'] %>
 #cloudfront_distribution_id: E1K0PL9ILT7ZOS
 
 # For testing locally, you can create a .env with these contents:
