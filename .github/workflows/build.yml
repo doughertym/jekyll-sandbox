@@ -47,6 +47,9 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: s3_website
+      - name: Show files
+        run: |
+          ls -la
       - name: S3 Publish
         uses: docker://justinharringa/s3_website:master
         with:
