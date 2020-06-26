@@ -6,3 +6,6 @@ layout: home
 ---
 
 Hello World!
+
+
+Version 0.0.2

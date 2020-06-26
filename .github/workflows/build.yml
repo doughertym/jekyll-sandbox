@@ -21,8 +21,7 @@ jobs:
           ruby-version: 2.5
       - name: Install dependencies
         run: |
-          gem install -​-vendor bundler
-          gem install -​-vendor s3_website
+          gem install bundler
           bundle install
           bundle package
       - name: Archive site as artifact
@@ -50,7 +49,12 @@ jobs:
         with:
           name: _site
       - name: Test S3 Publish
-        run: |
-          bundle exec s3_website install
-          bundle exec s3_website push --dry-run
+        uses: docker://justinharringa/s3_website:master
+        with:
+          args: 'push --site _site'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+
 
