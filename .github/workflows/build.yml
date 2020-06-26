@@ -58,7 +58,7 @@ jobs:
         run: |
           mv s3_website/s3_website.yml s3_website.yml
       - name: Set to production bucket when gh-pages
-        if: contains(github.ref, "gh-pages")
+        if: contains(github.ref, 'gh-pages')
         run: echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
       - name: S3 Publish
         uses: docker://justinharringa/s3_website:master
