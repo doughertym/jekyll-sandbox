@@ -24,7 +24,10 @@ jobs:
           gem install bundler
           bundle install
       - name: Build Site
-        run: bundle exec jekyll build
+        run: |
+          echo "patch: $GITHUB_RUN_NUMBER" >> _data/version.yml
+          echo "sha: $GITHUB_SHA" >> _data/version.yml
+          bundle exec jekyll build
       - name: Archive site as artifact
         uses: actions/upload-artifact@v1
         with:

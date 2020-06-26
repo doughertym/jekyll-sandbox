@@ -8,4 +8,4 @@ layout: home
 Hello World!
 
 
-Version 0.0.3
+Version {{ site.data.version.major }}.{{ site.data.version.minor }}.{{ site.data.version.patch }}-{{ site.data.version.sha }}
