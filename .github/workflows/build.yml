@@ -44,7 +44,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      S3_BUCKET: ${{ secrets.S3_BUCKET }}
+      S3_BUCKET: ${{ secrets.S3_BUCKET_TEST }}
     steps:
       - name: Retrieve site from artifacts
         uses: actions/download-artifact@v1
@@ -57,9 +57,9 @@ jobs:
       - name: Move s3_website.yml into root
         run: |
           mv s3_website/s3_website.yml s3_website.yml
-      - name: Set bucket when not gh-pages
-        if: !contains(github.ref, "gh-pages")
-        run: echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET_TEST }}"
+      - name: Set to production bucket when gh-pages
+        if: contains(github.ref, "gh-pages")
+        run: echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
       - name: S3 Publish
         uses: docker://justinharringa/s3_website:master
         with:
