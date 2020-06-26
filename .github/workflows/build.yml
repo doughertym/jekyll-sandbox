@@ -54,12 +54,10 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: s3_website
-      - name: Show files
-        run: |
-          find . -type f
-          mv s3_website/s3_website.yml s3_website.yml
-      - name: Set bucket when not gh-pages
-        if: {{ !contains(github.ref, "gh-pages") }}
+      - name: Move s3_website.yml into root
+         run: mv s3_website/s3_website.yml s3_website.yml
+      - if: {{ !contains(github.ref, "gh-pages") }}
+        name: Set bucket when not gh-pages
         run: print("::set-env name=S3_BUCKET::{}".format( ${{ secrets.S3_BUCKET_TEST }} ))
       - name: S3 Publish
         uses: docker://justinharringa/s3_website:master
