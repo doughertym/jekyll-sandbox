@@ -58,7 +58,8 @@ jobs:
         run: |
           mv s3_website/s3_website.yml s3_website.yml
       - name: Set bucket when not gh-pages
-        run: print("::set-env name=S3_BUCKET::{}".format( ${{ secrets.S3_BUCKET_TEST }} ))
+        # if: {{ !contains(github.ref, "gh-pages") }}
+        run: echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET_TEST }}"
       - name: S3 Publish
         uses: docker://justinharringa/s3_website:master
         with:
