@@ -2,7 +2,7 @@
 s3_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
 s3_secret: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
 s3_bucket: <%= ENV['S3_BUCKET'] %>
-#cloudfront_distribution_id: E1K0PL9ILT7ZOS
+cloudfront_distribution_id: <%= ENV['CLOUDFRONT_ID'] %>
 
 # For testing locally, you can create a .env with these contents:
 # S3_ID=FOO
