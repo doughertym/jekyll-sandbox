@@ -60,6 +60,9 @@ jobs:
       - name: Move s3_website.yml into root
         run: |
           mv s3_website/s3_website.yml s3_website.yml
+      - name: Show values
+        run: |
+          echo "github.ref = ${{ github.ref }}"
       - name: Set to production environment values when branch is gh-pages
         if: contains(github.ref, 'gh-pages') || contains(github.ref, 'Conditional-or')
         run: |
