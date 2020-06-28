@@ -61,7 +61,7 @@ jobs:
         run: |
           mv s3_website/s3_website.yml s3_website.yml
       - name: Set to production environment values when branch is gh-pages
-        if: contains(github.ref, 'gh-pages')
+        if: contains(github.ref, 'gh-pages') || contains(github.ref, 'Conditional-or')
         run: |
           echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
           echo "::set-env name=CLOUDFRONT_ID::${{ secrets.CLOUDFRONT_ID }}"
