@@ -16,8 +16,11 @@ try {
     console.log("Retrieve s3_website.yml from artifacts...");
     aClient.downloadArtifact("s3_website", `${GITHUB_WORKFLOW}/s3_website`);
 
-    console.log("Move s3_website.yml into root...");
-    io.mv(`${GITHUB_WORKFLOW}/s3_website/s3_website.yml`, `${GITHUB_WORKFLOW}/s3_website.yml`);
+    (async () => {
+        console.log("Move s3_website.yml into root...");
+        await io.mv(`${GITHUB_WORKFLOW}/s3_website/s3_website.yml`,
+            `${GITHUB_WORKFLOW}/s3_website.yml`)
+    })();
 
     console.log("Set to production environment values when branch is gh-pages")
     ls();
