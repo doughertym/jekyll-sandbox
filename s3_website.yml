@@ -48,15 +48,15 @@ cloudfront_distribution_id: <%= ENV['CLOUDFRONT_ID'] %>
 #     items:
 #       - your.website.com
 
-#cloudfront_distribution_config:
-#  aliases:
-#    quantity: 1
-#    items:
-#      - corgibytes.com
-#
-#cloudfront_invalidate_root: true
-#
-#cloudfront_wildcard_invalidation: true
+cloudfront_distribution_config:
+  aliases:
+    quantity: 1
+    items:
+      - corgibytes.com
+
+cloudfront_invalidate_root: true
+
+cloudfront_wildcard_invalidation: true
 
 # concurrency_level: 5
 
