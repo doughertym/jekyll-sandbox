@@ -1,0 +1,5 @@
+name: 'setup-deploy'
+description: 'Prepares the workspace for validation and/or deployment'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
