@@ -70,7 +70,7 @@ jobs:
           echo "github.head_ref = ${{ github.head_ref }}"
           echo "github.base_ref = ${{ github.base_ref }}"
       - name: Set to production environment values when branch is gh-pages
-        if: contains(github.ref, 'gh-pages') || contains(github.ref, 'Conditional-or')
+        if: contains(github.ref, 'gh-pages') || contains(github.head_ref, 'Conditional-or')
         run: |
           echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
           echo "::set-env name=CLOUDFRONT_ID::${{ secrets.CLOUDFRONT_ID }}"
