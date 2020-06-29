@@ -5,4 +5,4 @@ COPY * ./
 
 RUN npm install
 
-CMD [ "ls", "-la" ]
+CMD [ "node", ".github/actions/docker-env/main.js" ]
