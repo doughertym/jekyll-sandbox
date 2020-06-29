@@ -1,8 +1,7 @@
 FROM node:12-alpine
 
-WORKDIR /home/node/app
-COPY * ./
+WORKDIR /github/workspace/.github/actions/docker-env
 
 RUN npm install
 
-CMD [ "node", ".github/actions/docker-env/main.js" ]
+CMD [ "ls", "-la" ]
