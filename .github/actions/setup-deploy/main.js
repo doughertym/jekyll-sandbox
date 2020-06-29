@@ -5,17 +5,14 @@ const io = require('@actions/io');
 const { exec } = require('child_process');
 
 const aClient = artifact.create();
+const {GITHUB_WORKSPACE} = process.env;
 
 try {
-    const {GITHUB_WORKSPACE} = process.env;
     console.log(`GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}`);
     ls(GITHUB_WORKSPACE);
 
-    console.log("Retrieve _site from artifacts...");
-    aClient.downloadArtifact("_site");
-
-    console.log("Retrieve s3_website.yml from artifacts...");
-    aClient.downloadArtifact("s3_website");
+    downloadArtifact("_site");
+    downloadArtifact("s3_website");
 
     // (async () => {
     //     console.log("Move s3_website.yml into root...");
@@ -27,6 +24,20 @@ try {
     ls(GITHUB_WORKSPACE);
 } catch (error) {
     core.setFailed(error.message);
+}
+
+function downloadArtifact(name) {
+    (async () => {
+        console.log(`Retrieve ${name} from artifacts...`);
+        await aClient.downloadArtifact(name);
+    })()
+        .then(a => {
+            console.log(`Retrieved ${name} from artifacts...`, a);
+            ls(GITHUB_WORKSPACE);
+        })
+        .catch(e => {
+            core.setFailed(e.message);
+        });
 }
 
 function ls(dir) {
