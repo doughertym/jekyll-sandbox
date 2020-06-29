@@ -44,6 +44,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Show Env
         uses: ./.github/actions/env
 
