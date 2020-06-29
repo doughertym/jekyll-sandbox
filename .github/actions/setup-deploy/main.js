@@ -12,19 +12,19 @@ try {
     ls(GITHUB_WORKSPACE);
 
     console.log("Retrieve _site from artifacts...");
-    aClient.downloadArtifact("_site", `${GITHUB_WORKSPACE}/_site`);
+    aClient.downloadArtifact("_site");
 
     console.log("Retrieve s3_website.yml from artifacts...");
-    aClient.downloadArtifact("s3_website", `${GITHUB_WORKSPACE}/s3_website`);
+    aClient.downloadArtifact("s3_website");
 
-    (async () => {
-        console.log("Move s3_website.yml into root...");
-        await io.mv(`${GITHUB_WORKSPACE}/s3_website/s3_website.yml`,
-            `${GITHUB_WORKSPACE}/s3_website.yml`)
-    })();
+    // (async () => {
+    //     console.log("Move s3_website.yml into root...");
+    //     await io.mv(`${GITHUB_WORKSPACE}/s3_website/s3_website.yml`,
+    //         `${GITHUB_WORKSPACE}/s3_website.yml`)
+    // })();
 
     console.log("Set to production environment values when branch is gh-pages")
-    ls();
+    ls(GITHUB_WORKSPACE);
 } catch (error) {
     core.setFailed(error.message);
 }
