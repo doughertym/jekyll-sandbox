@@ -1,6 +1,6 @@
 FROM node:12-alpine
 
-COPY * ./
+COPY .github/actions/docker-env/* ./
 
 RUN npm install
 
