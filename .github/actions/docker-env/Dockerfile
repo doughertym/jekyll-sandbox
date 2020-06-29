@@ -5,4 +5,4 @@ COPY * ./
 
 RUN npm install
 
-CMD [ "node", "main.js" ]
+CMD [ "ls", "-la" ]
