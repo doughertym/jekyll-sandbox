@@ -7,19 +7,20 @@ const { exec } = require('child_process');
 const aClient = artifact.create();
 
 try {
-    const {GITHUB_WORKFLOW} = process.env;
-    ls();
+    const {GITHUB_WORKSPACE} = process.env;
+    console.log(`GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}`);
+    ls(GITHUB_WORKSPACE);
 
     console.log("Retrieve _site from artifacts...");
-    aClient.downloadArtifact("_site", `${GITHUB_WORKFLOW}/_site`);
+    aClient.downloadArtifact("_site", `${GITHUB_WORKSPACE}/_site`);
 
     console.log("Retrieve s3_website.yml from artifacts...");
-    aClient.downloadArtifact("s3_website", `${GITHUB_WORKFLOW}/s3_website`);
+    aClient.downloadArtifact("s3_website", `${GITHUB_WORKSPACE}/s3_website`);
 
     (async () => {
         console.log("Move s3_website.yml into root...");
-        await io.mv(`${GITHUB_WORKFLOW}/s3_website/s3_website.yml`,
-            `${GITHUB_WORKFLOW}/s3_website.yml`)
+        await io.mv(`${GITHUB_WORKSPACE}/s3_website/s3_website.yml`,
+            `${GITHUB_WORKSPACE}/s3_website.yml`)
     })();
 
     console.log("Set to production environment values when branch is gh-pages")
@@ -28,8 +29,8 @@ try {
     core.setFailed(error.message);
 }
 
-function ls() {
-    exec('ls -la', (error, stdout, stderr) => {
+function ls(dir) {
+    exec(`ls -la ${dir}`, (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return;
