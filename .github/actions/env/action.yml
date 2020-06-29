@@ -2,5 +2,4 @@ name: 'Env'
 description: 'Prints the environment'
 runs:
   using: 'node12'
-  pre: 'setup.js'
   main: 'main.js'
