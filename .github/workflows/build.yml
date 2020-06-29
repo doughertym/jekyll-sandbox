@@ -82,8 +82,6 @@ jobs:
         run: echo "$SECRETS_CONTEXT"
       - name: Show Env
         uses: ./.github/actions/env
-      - name: Show Docker-Env
-        uses: ./.github/actions/docker-env
 
   deploy:
     runs-on: ubuntu-latest

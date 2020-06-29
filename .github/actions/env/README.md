@@ -1,1 +1,0 @@
-# Echo Environment Javascript action

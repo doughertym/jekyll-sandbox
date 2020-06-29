@@ -1,5 +1,5 @@
 name: 'Env'
 description: 'Prints the environment'
 runs:
-  using: 'node12'
-  main: 'main.js'
+  using: 'docker'
+  image: 'Dockerfile'
