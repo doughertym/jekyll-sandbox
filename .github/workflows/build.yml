@@ -43,8 +43,18 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      S3_BUCKET: ${{ secrets.S3_BUCKET_TEST }}
+      CLOUDFRONT_ID: ${{ secrets.CLOUDFRONT_ID_TEST }}
     steps:
       - uses: actions/checkout@v2
+      - name: Set to production environment values when branch is gh-pages
+        if: contains(github.ref, 'gh-pages') || contains(github.head_ref, 'Conditional-or')
+        run: |
+          echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
+          echo "::set-env name=CLOUDFRONT_ID::${{ secrets.CLOUDFRONT_ID }}"
       - name: Show values
         run: |
           echo "github.run_id = ${{ github.run_id }}"
@@ -54,6 +64,22 @@ jobs:
           echo "github.ref = ${{ github.ref }}"
           echo "github.head_ref = ${{ github.head_ref }}"
           echo "github.base_ref = ${{ github.base_ref }}"
+      - name: Dump GitHub context
+          env:
+            GITHUB_CONTEXT: ${{ toJson(github) }}
+          run: echo "$GITHUB_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+      - name: Dump secrets context
+        env:
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
+        run: echo "$SECRETS_CONTEXT"
       - name: Show Env
         uses: ./.github/actions/env
 
