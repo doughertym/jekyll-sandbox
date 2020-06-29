@@ -40,6 +40,13 @@ jobs:
         with:
           name: s3_website
           path: s3_website.yml
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show Env
+        uses: ./.github/actions/env
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
