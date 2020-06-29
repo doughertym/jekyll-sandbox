@@ -11,6 +11,8 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  S3_BUCKET: ${{ secrets.S3_BUCKET_TEST }}
+  CLOUDFRONT_ID: ${{ secrets.CLOUDFRONT_ID_TEST }}
 
 jobs:
   show:
@@ -90,16 +92,31 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup deployment
-        uses: ./.github/actions/setup-deploy
+      - name: Retrieve site from artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: _site
+      - name: Retrieve s3_website.yml from artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: s3_website
+      - name: Move s3_website.yml into root
+        run: |
+          mv s3_website/s3_website.yml s3_website.yml
+      - name: Set to production environment values when branch is gh-pages
+        if: contains(github.ref, 'gh-pages') || contains(github.head_ref, 'Conditional-or')
+        run: |
+          echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
+          echo "::set-env name=CLOUDFRONT_ID::${{ secrets.CLOUDFRONT_ID }}"
+      - name: S3 Publish
+        uses: docker://justinharringa/s3_website:master
+        with:
+          args: 'push --site _site --dry-run'
 
   deploy:
     runs-on: ubuntu-latest
     needs: test
     env:
-      S3_BUCKET: ${{ secrets.S3_BUCKET_TEST }}
-      CLOUDFRONT_ID: ${{ secrets.CLOUDFRONT_ID_TEST }}
     steps:
       - name: Retrieve site from artifacts
         uses: actions/download-artifact@v1
