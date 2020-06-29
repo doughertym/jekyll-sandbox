@@ -1,5 +1,5 @@
 #!/bin/sh -l
 
-cd .github/actions/docker-env
+cd .github/actions/env
 npm install
 node main.js
