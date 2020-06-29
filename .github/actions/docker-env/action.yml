@@ -1,0 +1,5 @@
+name: 'Docker-Env'
+description: 'Prints the environment via Docker Node.js image'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
