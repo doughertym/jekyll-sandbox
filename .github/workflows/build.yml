@@ -26,9 +26,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set to production environment values when branch is gh-pages
         if: contains(github.ref, 'gh-pages') || contains(github.head_ref, 'Conditional-or')
-        run: |
-          echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
-          echo "::set-env name=CLOUDFRONT_ID::${{ secrets.CLOUDFRONT_ID }}"
+        run: echo "Is `gh-pages` branch!"
       - name: Show values
         run: |
           echo "github.run_id = ${{ github.run_id }}"
@@ -106,8 +104,8 @@ jobs:
       - name: Set to production environment values when branch is gh-pages
         if: contains(github.ref, 'gh-pages') || contains(github.head_ref, 'Conditional-or')
         run: |
-          echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
-          echo "::set-env name=CLOUDFRONT_ID::${{ secrets.CLOUDFRONT_ID }}"
+          echo "${{ secrets.S3_BUCKET }}" >> $S3_BUCKET
+          echo "${{ secrets.CLOUDFRONT_ID }}" >> $CLOUDFRONT_ID
       - name: S3 Publish
         uses: docker://justinharringa/s3_website:master
         with:
@@ -131,8 +129,8 @@ jobs:
       - name: Set to production environment values when branch is gh-pages
         if: contains(github.ref, 'gh-pages') || contains(github.head_ref, 'Conditional-or')
         run: |
-          echo "::set-env name=S3_BUCKET::${{ secrets.S3_BUCKET }}"
-          echo "::set-env name=CLOUDFRONT_ID::${{ secrets.CLOUDFRONT_ID }}"
+          echo "${{ secrets.S3_BUCKET }}" >> $S3_BUCKET
+          echo "${{ secrets.CLOUDFRONT_ID }}" >> $CLOUDFRONT_ID
       - name: S3 Publish
         uses: docker://justinharringa/s3_website:master
         with:
