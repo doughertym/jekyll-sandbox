@@ -1,15 +1,28 @@
-version: "2"
+version: "3"
+###
+# Start development server by running the following command:
+#
+#   %> docker compose up -d
+#
+# To open a bash shell into the container, run:
+#
+#   %> docker compose exec jekyll-sandbox bash
+#
+###
 services:
-  web:
-    build: .
+  jekyll-sandbox:
+    image: jekyll/jekyll:builder
     volumes:
-      - .:/app
-      - bundle:/bundle
+      - .:/srv/jekyll
+    working_dir: /srv/jekyll
     ports:
-      - "80:80"
+      - 4100:4100
     command:
-      bundle exec jekyll serve -H 0.0.0.0 -P 80 --future --incremental
-    entrypoint:
-      ./docker-entrypoint.sh
-volumes:
-  bundle:
+      - sh
+      - -c
+      - |
+        bundle config set --local path 'vendor/bundle'
+        bundle install
+        bundle exec jekyll serve -P 4100 --verbose --host 0.0.0.0 --watch
+    stdin_open: true
+    tty: true
