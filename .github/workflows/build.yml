@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
   release:
-    types: [ published, prereleased, released ]
+    types: [ published ]
   workflow_dispatch:
 
 env:
@@ -47,6 +47,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
 
   deploy:
+    if: github.ref_name == 'main'
+    name: Deploy Jekyll sandbox site
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -56,6 +58,5 @@ jobs:
       - name: Show Env
         run: env
       - name: Deploy to GitHub Pages
-        if: github.ref_name == 'main'
         id: deployment
         uses: actions/deploy-pages@v4
