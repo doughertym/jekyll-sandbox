@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
   release:
-    types: [ published, prereleased, released ]
+    types: [ published ]
   workflow_dispatch:
 
 env:
@@ -47,6 +47,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
 
   deploy:
+    name: Deploy Jekyll sandbox site
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
