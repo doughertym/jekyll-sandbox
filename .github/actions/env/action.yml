@@ -1,5 +1,0 @@
-name: 'Env'
-description: 'Prints the environment'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
